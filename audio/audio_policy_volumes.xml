@@ -42,16 +42,27 @@ volume index from 0 to 100.
                                        ref="SONIFICATION_CATEGORY_EXT_MEDIA_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_RING" deviceCategory="DEVICE_CATEGORY_HEARING_AID"
                                        ref="DEFAULT_HEARING_AID_VOLUME_CURVE"/>
-    <volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_HEADSET"
-                                        ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+    <volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_HEADSET">
+        <point>1,-6550</point>
+        <point>15,-4650</point>
+        <point>30,-3300</point>
+        <point>43,-2400</point>
+        <point>65,-1530</point>
+        <point>85,-730</point>
+        <point>93,-280</point>
+        <point>100,0</point>
+    </volume>
     <volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_SPEAKER">
-        <point>1,-6100</point>
-        <point>15,-3850</point>
-        <point>30,-2600</point>
-        <point>43,-1800</point>
-        <point>65,-900</point>
-        <point>85,-440</point>
-        <point>93,-180</point>
+        <point>1,-5850</point>
+        <point>12,-3850</point>
+        <point>21,-2950</point>
+        <point>31,-2650</point>
+        <point>43,-2150</point>
+        <point>52,-1850</point>
+        <point>60,-1500</point>
+        <point>72,-1050</point>
+        <point>85,-650</point>
+        <point>93,-350</point>
         <point>100,0</point>
     </volume>
     <volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_EARPIECE"
@@ -127,7 +138,7 @@ volume index from 0 to 100.
     <volume stream="AUDIO_STREAM_ACCESSIBILITY" deviceCategory="DEVICE_CATEGORY_HEADSET"
                                                 ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_ACCESSIBILITY" deviceCategory="DEVICE_CATEGORY_SPEAKER"
-                                                ref="DEFAULT_DEVICE_CATEGORY_SPEAKER_VOLUME_CURVE"/>
+                                                ref="SONIFICATION_CATEGORY_SPEAKER_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_ACCESSIBILITY" deviceCategory="DEVICE_CATEGORY_EARPIECE"
                                                 ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_ACCESSIBILITY" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA"

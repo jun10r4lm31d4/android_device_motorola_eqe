@@ -1,15 +1,130 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-     SPDX-FileCopyrightText: The LineageOS Project
-     SPDX-License-Identifier: Apache-2.0
--->
-<compatibility-matrix version="2.0" type="framework">
+<compatibility-matrix version="5.0" type="framework">
+	<hal format="hidl" optional="true">
+        <name>com.motorola.hardware.biometric.fingerprint</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IMotoFingerPrint</name>
+            <instance>default</instance>
+        </interface>
+        <interface>
+            <name>IMotoFingerPrintSensorTest</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+	<hal format="hidl" optional="true">
+        <name>com.motorola.hardware.display.touch</name>
+        <transport>hwbinder</transport>
+        <version>1.0-1</version>
+        <interface>
+            <name>IMotTouch</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>motorola.hardware.audio.radar</name>
+        <version>1.0</version>
+        <interface>
+            <name>IAudioRadar</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>motorola.hardware.camera.desktop</name>
+        <version>1.0</version>
+		<version>2.0</version>
+        <interface>
+            <name>ICameraDesktop</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>motorola.hardware.camera.imgtuner.aidl</name>
+        <interface>
+            <name>IImageTuning</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>motorola.hardware.camera.imgtuner</name>
+        <version>1.0</version>
+        <interface>
+            <name>IImageTuning</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>motorola.hardware.fdrcontrol</name>
+        <version>1.0-2</version>
+        <interface>
+            <name>IFdrControl</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>motorola.hardware.fmradio</name>
+        <version>1.0</version>
+        <interface>
+            <name>IMotFMRadio</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>motorola.hardware.sensors</name>
+        <version>1</version>
+        <interface>
+            <name>ISensorExt</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.arcsoft.hardware.camera.postproc</name>
+        <version>1</version>
+        <interface>
+            <name>IPostProcService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl" optional="true">
         <name>vendor.egistec.hardware.fingerprint</name>
         <transport>hwbinder</transport>
         <version>4.0</version>
         <interface>
             <name>IBiometricsFingerprintRbs</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.nxp.hardware.nfc</name>
+        <version>1.0-1</version>
+        <version>2.0</version>
+        <interface>
+            <name>INqNfc</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.goodix.hardware.biometrics.fingerprint</name>
+        <transport>hwbinder</transport>
+        <version>2.1</version>
+        <interface>
+            <name>IGoodixFingerprintDaemon</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.fingerprint</name>
+        <version>1.0</version>
+        <interface>
+            <name>IQtiExtendedFingerprint</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.zui.hardware.ifaa</name>
+        <version>1.0</version>
+        <interface>
+            <name>IIFAADevice</name>
             <instance>default</instance>
         </interface>
     </hal>

@@ -4,3 +4,5 @@ masterclear.allow_retain_esim_profiles_after_fdr=true
 
 # Radio
 ro.vendor.radio.imei.sv=4
+
+import /product/product.${ro.boot.hardware.sku}.prop

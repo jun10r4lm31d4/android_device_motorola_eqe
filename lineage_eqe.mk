@@ -7,21 +7,21 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit from rtwo device
-$(call inherit-product, device/motorola/rtwo/device.mk)
+# Inherit from eqe device
+$(call inherit-product, device/motorola/eqe/device.mk)
 
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-PRODUCT_NAME := lineage_rtwo
-PRODUCT_DEVICE := rtwo
+PRODUCT_NAME := lineage_eqe
+PRODUCT_DEVICE := eqe
 PRODUCT_MANUFACTURER := motorola
 PRODUCT_BRAND := motorola
-PRODUCT_MODEL := motorola edge 40 pro
+PRODUCT_MODEL := motorola edge 50 pro
 
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="rtwo_g-user 15 V1TRS35H.60-33-5 7195d7-c0632 release-keys" \
-    BuildFingerprint=motorola/rtwo_g/rtwo:15/V1TRS35H.60-33-5/7195d7-c0632:user/release-keys \
-    DeviceProduct=rtwo_g
+    BuildDesc="eqe_g-user 15 V1UM35H.10-67-9 ce05b2-7ae82e release-keys" \
+    BuildFingerprint=motorola/eqe_g/eqe:15/V1UM35H.10-67-9/ce05b2-7ae82e:user/release-keys \
+    DeviceProduct=eqe_g

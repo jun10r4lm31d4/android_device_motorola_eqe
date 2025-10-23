@@ -4,60 +4,67 @@
 #
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 2400
-TARGET_SCREEN_WIDTH := 1080
+TARGET_SCREEN_HEIGHT := 2712
+TARGET_SCREEN_WIDTH := 1220
 
 # Screen
 TARGET_SCREEN_DENSITY := 400
 
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := 400dpi
-PRODUCT_AAPT_PREBUILT_DPI := xxxhdpi xxhdpi xhdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
+# API
 BOARD_SHIPPING_API_LEVEL := 33
 PRODUCT_SHIPPING_API_LEVEL := $(BOARD_SHIPPING_API_LEVEL)
 
 # Characteristics
 PRODUCT_CHARACTERISTICS := nosdcard
 
-# Inherit from motorola sm8550-common
-$(call inherit-product, device/motorola/sm8550-common/common.mk)
+# Inherit from motorola sm7550-common
+$(call inherit-product, device/motorola/sm7550-common/common.mk)
 
 # Overlay
 PRODUCT_PACKAGES += \
     ApertureResDevice \
+    DeviceAsWebcamResDevice \
     FrameworksResDevice \
     LineageSystemUIDevice \
     ProductFrameworksResDevice \
+    RegulatoryInfoOverlayDevice \
+    RegulatoryInfoOverlayDeviceSB \
     SettingsResDevice \
-    SystemUIResDevice
+    SystemUIResDevice \
+    SecureElementOverlayDevice
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/sku_kalama/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/sku_kalama/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/sku_kalama/mixer_paths_kalama_mtp_wsa883x.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/mixer_paths_kalama_mtp_wsa883x.xml \
-    $(LOCAL_PATH)/audio/sku_kalama/mixer_paths_kalama_mtp_wsa883x_nohdr.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/mixer_paths_kalama_mtp_wsa883x_nohdr.xml \
-    $(LOCAL_PATH)/audio/sku_kalama/resourcemanager_kalama_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_kalama/resourcemanager_kalama_mtp.xml \
+    $(LOCAL_PATH)/audio/sku_crow/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/audio_effects.xml \
+    $(LOCAL_PATH)/audio/sku_crow/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/audio_effects.conf \
+    $(LOCAL_PATH)/audio/sku_crow/mixer_paths_crow_idp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/mixer_paths_crow_idp.xml \
+    $(LOCAL_PATH)/audio/sku_crow/resourcemanager_crow_idp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/resourcemanager_crow_idp.xml \
+    $(LOCAL_PATH)/audio/sku_crow_qssi/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow_qssi/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(LOCAL_PATH)/audio/audio_ext_spkr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_ext_spkr.conf \
     $(LOCAL_PATH)/audio/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     $(LOCAL_PATH)/audio/microphone_characteristics.xml:$(TARGET_COPY_OUT_VENDOR)/etc/microphone_characteristics.xml \
     $(LOCAL_PATH)/audio/usecaseKvManager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usecaseKvManager.xml \
-    $(LOCAL_PATH)/audio/usecaseKvManager_prc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usecaseKvManager_prc.xml \
-    $(LOCAL_PATH)/audio/usecaseKvManager_tmo.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usecaseKvManager_tmo.xml
+
+# Camera
+PRODUCT_PACKAGES += \
+    libgui_shim_vendor
 
 # Dex-pre-opt exclusions
 $(call add-product-dex-preopt-module-config,MotoSignatureApp,disable)
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.3-service.moto_sm8550_fod
+    android.hardware.biometrics.fingerprint@2.3-service.moto_sm7550_fod
 
 # Init
 PRODUCT_PACKAGES += \
-    init.mmi.overlay.rc
+    init.mmi.overlay.rc \
+    init.vendor.st21nfc.rc
 
 # Keylayout
 PRODUCT_COPY_FILES += \
@@ -65,21 +72,16 @@ PRODUCT_COPY_FILES += \
 
 # NFC
 PRODUCT_PACKAGES += \
-    android.hardware.nfc-service.nxp \
     com.android.nfc_extras \
-    nqnfcinfo \
-    Tag
+    Tag \
+    nfc_nci.st21nfc.default
 
 # Permissions
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.nfc.ese.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_dne/android.hardware.nfc.ese.xml \
-    frameworks/native/data/etc/android.hardware.se.omapi.ese.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_dne/android.hardware.se.omapi.ese.xml \
+    frameworks/native/data/etc/android.hardware.nfc.ese.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.ese.xml \
+    frameworks/native/data/etc/android.hardware.se.omapi.ese.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.se.omapi.ese.xml \
     frameworks/native/data/etc/android.hardware.telephony.euicc.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/android.hardware.telephony.euicc.xml \
     frameworks/native/data/etc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.nxp.mifare.xml
-
-# Thermal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine-rtwo-game-perf.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-rtwo.conf
 
 # PowerShare
 PRODUCT_PACKAGES += \
@@ -91,4 +93,4 @@ $(call soong_config_set,lineage_powershare,powershare_path,/sys/class/power_supp
 PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
 
 # Inherit from vendor blobs
-$(call inherit-product, vendor/motorola/rtwo/rtwo-vendor.mk)
+$(call inherit-product, vendor/motorola/eqe/eqe-vendor.mk)
