@@ -1,0 +1,2 @@
+# Motorola: Add for HIDRAW to access the glass usb device
+/dev/hidraw*             0660    uhid       uhid
