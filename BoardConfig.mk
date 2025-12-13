@@ -54,7 +54,8 @@ TARGET_PROVIDES_LIBAGM := true
 TARGET_PROVIDES_LIBAR_PAL := true
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := crow
+TARGET_BOOTLOADER_BOARD_NAME := eqe
+TARGET_NO_BOOTLOADER := true
 
 # Boot
 BOARD_BOOT_HEADER_VERSION := 4
@@ -70,14 +71,14 @@ BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
 TARGET_NEEDS_DTBOIMAGE := true
 
 # Properties
-TARGET_ODM_PROP += $(DEVICE_PATH)/odm.prop
-TARGET_ODM_DLKM_PROP += $(DEVICE_PATH)/odm_dlkm.prop
-TARGET_PRODUCT_PROP += $(DEVICE_PATH)/product.prop
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/system_ext.prop
-TARGET_SYSTEM_DLKM_PROP += $(DEVICE_PATH)/system_dlkm.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
-TARGET_VENDOR_DLKM_PROP += $(DEVICE_PATH)/vendor_dlkm.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/configs/prop/odm.prop
+TARGET_ODM_DLKM_PROP += $(DEVICE_PATH)/configs/prop/odm_dlkm.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/configs/prop/product.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/prop/system.prop
+TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/configs/prop/system_ext.prop
+TARGET_SYSTEM_DLKM_PROP += $(DEVICE_PATH)/configs/prop/system_dlkm.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/configs/prop/vendor.prop
+TARGET_VENDOR_DLKM_PROP += $(DEVICE_PATH)/configs/prop/vendor_dlkm.prop
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
@@ -105,7 +106,7 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_IMAGE_NAME := Image
 
-TARGET_KERNEL_SOURCE := kernel/msm-5.15
+TARGET_KERNEL_SOURCE := kernel/motorola/sm7550
 
 TARGET_KERNEL_CONFIG := \
     gki_defconfig \
@@ -116,69 +117,69 @@ TARGET_KERNEL_CONFIG := \
 
 # Kernel modules
 BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.systemdlkm_blocklist.msm.kalama
-BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.system_dlkm))
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.system_dlkm))
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.vendor_blocklist.msm.kalama
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load))
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.vendor_boot))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
-BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery $(DEVICE_PATH)/modules.load.vendor_ramdisk))
-SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.load.system_dlkm))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.vendor_boot))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.recovery))
+BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.recovery $(DEVICE_PATH)/configs/modules/modules.load.vendor_ramdisk))
+SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.system_dlkm))
 
-TARGET_KERNEL_EXT_MODULE_ROOT := $(TOP)
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/motorola/sm7550-modules
 TARGET_KERNEL_EXT_MODULES := \
-    vendor/qcom/opensource/mmrm-driver \
-    vendor/qcom/opensource/mm-drivers/hw_fence \
-    vendor/qcom/opensource/mm-drivers/msm_ext_display \
-    vendor/qcom/opensource/mm-drivers/sync_fence \
-    vendor/qcom/opensource/audio-kernel \
-    vendor/qcom/opensource/camera-kernel \
-    vendor/qcom/opensource/dataipa/drivers/platform/msm \
-    vendor/qcom/opensource/datarmnet/core \
-    vendor/qcom/opensource/datarmnet-ext/aps \
-    vendor/qcom/opensource/datarmnet-ext/offload \
-    vendor/qcom/opensource/datarmnet-ext/shs \
-    vendor/qcom/opensource/datarmnet-ext/perf \
-    vendor/qcom/opensource/datarmnet-ext/perf_tether \
-    vendor/qcom/opensource/datarmnet-ext/sch \
-    vendor/qcom/opensource/datarmnet-ext/wlan \
-    vendor/qcom/opensource/securemsm-kernel \
-    vendor/qcom/opensource/display-drivers/msm \
-    vendor/qcom/opensource/eva-kernel \
-    vendor/qcom/opensource/video-driver \
-    vendor/qcom/opensource/graphics-kernel \
-    vendor/qcom/opensource/wlan/platform \
-    vendor/qcom/opensource/wlan/qcacld-3.0/.qca6750 \
-    vendor/qcom/opensource/bt-kernel \
-    motorola/kernel/modules/drivers/mmi_annotate \
-    motorola/kernel/modules/drivers/mmi_info \
-    motorola/kernel/modules/drivers/power/bm_adsp_ulog \
-    motorola/kernel/modules/drivers/power/mmi_charger \
-    motorola/kernel/modules/drivers/power/qti_glink_charger \
-    motorola/kernel/modules/drivers/power/qpnp_adaptive_charge \
-    motorola/kernel/modules/drivers/misc/utag \
-    motorola/kernel/modules/drivers/mmi_relay \
-    motorola/kernel/modules/drivers/power/mmi_lpd_mitigate \
-    motorola/kernel/modules/drivers/moto_f_usbnet \
-    motorola/kernel/modules/drivers/misc/mmi_sys_temp \
-    motorola/kernel/modules/drivers/power/wakeup_sources \
-    motorola/kernel/modules/drivers/watchdogtest \
-    motorola/kernel/modules/drivers/regulator/wl2868c \
-    motorola/kernel/modules/drivers/regulator/wl2864c \
-    motorola/kernel/modules/drivers/sensors \
-    motorola/kernel/modules/drivers/misc/sx937x \
-    motorola/kernel/modules/drivers/misc/awinic/sarsensor \
-    motorola/kernel/modules/drivers/misc/awinic/aw862x_haptic_nv_v1 \
-    motorola/kernel/modules/drivers/misc/suspend_marker \
-    motorola/kernel/modules/drivers/input/touchscreen/touchscreen_mmi \
-    motorola/kernel/modules/drivers/input/touchscreen/goodix_berlin_mmi \
-    motorola/kernel/modules/drivers/input/misc/goodix_fod_mmi \
-    motorola/kernel/modules/drivers/input/misc/vl53L1_14_1_2 \
-    motorola/kernel/modules/drivers/moto_mm \
-    motorola/kernel/modules/drivers/moto_mmap_fault \
-    motorola/kernel/modules/drivers/moto_swap \
-    motorola/kernel/modules/drivers/nfc/st21nfc \
-    motorola/kernel/modules/drivers/ese/st54spi_gpio
+    qcom/opensource/mmrm-driver \
+    qcom/opensource/mm-drivers/hw_fence \
+    qcom/opensource/mm-drivers/msm_ext_display \
+    qcom/opensource/mm-drivers/sync_fence \
+    qcom/opensource/audio-kernel \
+    qcom/opensource/camera-kernel \
+    qcom/opensource/dataipa/drivers/platform/msm \
+    qcom/opensource/datarmnet/core \
+    qcom/opensource/datarmnet-ext/aps \
+    qcom/opensource/datarmnet-ext/offload \
+    qcom/opensource/datarmnet-ext/shs \
+    qcom/opensource/datarmnet-ext/perf \
+    qcom/opensource/datarmnet-ext/perf_tether \
+    qcom/opensource/datarmnet-ext/sch \
+    qcom/opensource/datarmnet-ext/wlan \
+    qcom/opensource/securemsm-kernel \
+    qcom/opensource/display-drivers/msm \
+    qcom/opensource/eva-kernel \
+    qcom/opensource/video-driver \
+    qcom/opensource/graphics-kernel \
+    qcom/opensource/wlan/platform \
+    qcom/opensource/wlan/qcacld-3.0/.qca6750 \
+    qcom/opensource/bt-kernel \
+    motorola/drivers/mmi_annotate \
+    motorola/drivers/mmi_info \
+    motorola/drivers/power/bm_adsp_ulog \
+    motorola/drivers/power/mmi_charger \
+    motorola/drivers/power/qti_glink_charger \
+    motorola/drivers/power/qpnp_adaptive_charge \
+    motorola/drivers/misc/utag \
+    motorola/drivers/mmi_relay \
+    motorola/drivers/power/mmi_lpd_mitigate \
+    motorola/drivers/moto_f_usbnet \
+    motorola/drivers/misc/mmi_sys_temp \
+    motorola/drivers/power/wakeup_sources \
+    motorola/drivers/watchdogtest \
+    motorola/drivers/regulator/wl2868c \
+    motorola/drivers/regulator/wl2864c \
+    motorola/drivers/sensors \
+    motorola/drivers/misc/sx937x \
+    motorola/drivers/misc/awinic/sarsensor \
+    motorola/drivers/misc/awinic/aw862x_haptic_nv_v1 \
+    motorola/drivers/misc/suspend_marker \
+    motorola/drivers/input/touchscreen/touchscreen_mmi \
+    motorola/drivers/input/touchscreen/goodix_berlin_mmi \
+    motorola/drivers/input/misc/goodix_fod_mmi \
+    motorola/drivers/input/misc/vl53L1_14_1_2 \
+    motorola/drivers/moto_mm \
+    motorola/drivers/moto_mmap_fault \
+    motorola/drivers/moto_swap \
+    motorola/drivers/nfc/st21nfc \
+    motorola/drivers/ese/st54spi_gpio
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
@@ -215,10 +216,10 @@ BOARD_ROOT_EXTRA_SYMLINKS := /vendor/fsg:/fsg
 
 # Recovery
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/init/fstab.qcom
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/init/fstab.qcom
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/recovery.wipe
 
 # RIL
@@ -261,3 +262,5 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Include the proprietary files BoardConfig.
 include vendor/motorola/eqe/BoardConfigVendor.mk
+
+BUILD_BROKEN_DUP_RULES := true

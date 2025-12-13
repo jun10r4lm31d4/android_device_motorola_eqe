@@ -44,7 +44,6 @@ PRODUCT_PACKAGES += \
     libagm_compress_plugin \
     libagm_mixer_plugin \
     libagm_pcm_plugin \
-    libats \
     libaudiochargerlistener \
     libbatterylistener \
     libfmpal \
@@ -271,11 +270,13 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-lineage
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
-# PRODUCT_PACKAGES += \
-#     CarrierConfigResTarget \
-#     FrameworksResTarget \
-#     NcmTetheringOverlay \
-#     WifiResTarget
+PRODUCT_PACKAGES += \
+    FrameworksResTarget \
+    MotoFrameworksResTarget \
+    MotoSettingsResTarget \
+    MotoSystemUIResTarget \
+    WifiResTarget \
+    FrameworksResMotoCommon
 
 # Partitions
 PRODUCT_PACKAGES += \
@@ -285,8 +286,6 @@ PRODUCT_PACKAGES += \
     vendor_fsg_mountpoint \
     rfs_msm_mpss_readonly_fsg_symlink \
     rfs_msm_mpss_readonly_vendor_fsg_symlink
-#    vendor_super_fsg_mountpoint \
-#    vendor_super_modem_mountpoint
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
@@ -433,7 +432,8 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE += device/motorola/eqe/vintf/framework_manifest.xml
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
-DEVICE_MANIFEST_FILE := \
+DEVICE_MANIFEST_SKUS := crow
+DEVICE_MANIFEST_CROW_FILES := \
     $(AUDIO_HAL_DIR)/configs/common/manifest_non_qmaa.xml \
     $(AUDIO_HAL_DIR)/configs/common/manifest_non_qmaa_extn.xml \
     $(LOCAL_PATH)/vintf/manifest_crow.xml
@@ -441,6 +441,11 @@ DEVICE_MANIFEST_FILE := \
 ODM_MANIFEST_SKUS += dn dne
 ODM_MANIFEST_DN_FILES := $(LOCAL_PATH)/vintf/manifest_eqe_dn.xml
 ODM_MANIFEST_DNE_FILES := $(LOCAL_PATH)/vintf/manifest_eqe_dne.xml
+
+# Whitelisted libraries
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/public.libraries.system-qti.txt:$(TARGET_COPY_OUT_SYSTEM)/etc/public.libraries-qti.txt
+    $(LOCAL_PATH)/configs/public.libraries.system_ext-qti.txt:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/public.libraries-qti.txt
 
 # WiFi
 PRODUCT_PACKAGES += \
