@@ -26,8 +26,8 @@ vendor/etc/ssg/tz_whitelist.json
 vendor/bin/diag-router
 
 # Display postprocessing
-vendor/bin/ppd
 vendor/bin/hw/vendor.display.color@1.0-service
+vendor/bin/ppd
 vendor/lib64/libdisp-aba.so
 
 # ESE
@@ -67,6 +67,9 @@ system_ext/etc/permissions/com.android.hotwordenrollment.common.util.xml
 system_ext/framework/com.android.hotwordenrollment.common.util.jar
 
 # IMS
+system/etc/permissions/moto-telephony.xml
+system/framework/moto-telephony.jar
+system/lib64/vendor.qti.diaghal-V1-ndk.so
 system_ext/app/ImsRcsService/ImsRcsService.apk
 system_ext/etc/permissions/telephony_system-ext_privapp-permissions-qti.xml
 system_ext/etc/permissions/vendor.qti.ims.rcsservice.xml
@@ -88,9 +91,6 @@ system_ext/framework/vendor.qti.ims.rcsuce-V1.2-java.jar
 system_ext/framework/vendor.qti.ims.rcsuceaidlservice-V1-java.jar
 system_ext/lib64/libimscamera_jni.so
 system_ext/lib64/libimsmedia_jni.so
-system/etc/permissions/moto-telephony.xml
-system/framework/moto-telephony.jar
-system/lib64/vendor.qti.diaghal-V1-ndk.so
 
 # IRQ balance
 vendor/bin/msm_irqbalance
@@ -121,8 +121,8 @@ vendor/lib64/libQnnHtpV75Stub.so
 vendor/lib64/libQnnSystem.so
 
 # NFC firmware
-vendor/firmware/st54l_fw_felica.bin
 vendor/firmware/st54l_fw.bin
+vendor/firmware/st54l_fw_felica.bin
 vendor/lib64/libpn560_fw.so
 vendor/lib64/libsn100u_fw.so
 vendor/lib64/libsn220u_fw.so
@@ -149,12 +149,14 @@ vendor/bin/qrtr-lookup
 vendor/bin/qrtr-ns
 vendor/etc/init/qmipriod.debug.rc
 vendor/etc/init/qmipriod.rc
-vendor/etc/sec_config
 vendor/etc/seccomp_policy/qti-systemd.policy
+vendor/etc/sec_config
+vendor/lib64/libadropbox.so
 vendor/lib64/libidl.so
 vendor/lib64/libmdmcutback.so
 vendor/lib64/libmdmdetect.so
 vendor/lib64/libqcci_legacy.so
+vendor/lib64/libqmi.so
 vendor/lib64/libqmi_cci.so
 vendor/lib64/libqmi_client_helper.so
 vendor/lib64/libqmi_client_qmux.so
@@ -163,7 +165,6 @@ vendor/lib64/libqmi_csi.so
 vendor/lib64/libqmi_csvt_srvc.so
 vendor/lib64/libqmi_encdec.so
 vendor/lib64/libqmi_legacy.so
-vendor/lib64/libqmi.so
 vendor/lib64/libqmiextservices.so
 vendor/lib64/libqmimotext.so
 vendor/lib64/libqmiservices.so
@@ -172,7 +173,6 @@ vendor/lib64/libqsocket.so
 vendor/lib64/libsmemlog.so
 vendor/lib64/libsubsystem_control.so
 vendor/lib64/libsystem_health_mon.so
-vendor/lib64/libadropbox.so
 
 # Touchscreen firmware
 vendor/firmware/csot_goodix_cfg_group.bin
@@ -189,13 +189,13 @@ vendor/lib64/libvideotxr.so
 vendor/lib64/libvideoutils.so
 
 # VPU firmware
-vendor/firmware/vpu20_1v_unsigned.mbn
 vendor/firmware/vpu20_1v.mbn
-vendor/firmware/vpu20_4v_unsigned.mbn
+vendor/firmware/vpu20_1v_unsigned.mbn
 vendor/firmware/vpu20_4v.mbn
-vendor/firmware/vpu30_4v_16mb_unsigned.mbn
-vendor/firmware/vpu30_4v_16mb.mbn
-vendor/firmware/vpu30_4v_unsigned.mbn
+vendor/firmware/vpu20_4v_unsigned.mbn
 vendor/firmware/vpu30_4v.mbn
-vendor/firmware/vpu33_4v_unsigned.mbn
+vendor/firmware/vpu30_4v_16mb.mbn
+vendor/firmware/vpu30_4v_16mb_unsigned.mbn
+vendor/firmware/vpu30_4v_unsigned.mbn
 vendor/firmware/vpu33_4v.mbn
+vendor/firmware/vpu33_4v_unsigned.mbn

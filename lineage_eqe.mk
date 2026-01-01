@@ -14,6 +14,10 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from eqe device
 $(call inherit-product, device/motorola/eqe/device.mk)
 
+TARGET_ENABLE_BLUR := true
+TARGET_DISABLE_MATLOG := true
+TARGET_EXCLUDES_AUDIOFX := true
+
 PRODUCT_DEVICE := eqe
 PRODUCT_NAME := lineage_eqe
 PRODUCT_BRAND := motorola

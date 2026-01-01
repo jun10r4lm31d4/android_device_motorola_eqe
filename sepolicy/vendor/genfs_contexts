@@ -1,0 +1,14 @@
+# Sensors
+genfscon sysfs /devices/virtual/laser                                                                   u:object_r:vendor_sysfs_laser:s0
+
+# Touchscreen
+genfscon sysfs /devices/platform/soc/8c0000.qcom,qupv3_0_geni_se/880000.spi/spi_master/spi0/spi0.0/touchscreen u:object_r:vendor_sysfs_touchpanel:s0
+
+# Vibrator
+genfscon sysfs /devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a94000.i2c/i2c-2/2-005a/leds/vibrator u:object_r:sysfs_vibrator:s0
+
+# Extcon
+genfscon sysfs /devices/platform/soc/88e0000.qcom,msm-eud/extcon/extcon0                                                   u:object_r:sysfs_extcon:s0
+genfscon sysfs /devices/platform/soc/soc:qcom,msm-ext-disp/extcon/extcon1                                                  u:object_r:sysfs_extcon:s0
+genfscon sysfs /devices/platform/soc/soc:qcom,msm-ext-disp/extcon/extcon2                                                  u:object_r:sysfs_extcon:s0
+genfscon sysfs /devices/platform/soc/soc:spf_core_platform/soc:spf_core_platform:lpass-cdc/wcd937x-codec/extcon/extcon3    u:object_r:sysfs_extcon:s0

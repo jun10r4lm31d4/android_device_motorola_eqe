@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device name="Android">
+  <item name="none">0</item>
+  <!-- Most values are the incremental current used by a feature,
+       in mA (measured at nominal voltage).
+       The default values are deliberately incorrect values.
+       OEM's must measure and provide actual values before
+       shipping a device.
+       Example real-world values are given in comments, but they
+       are totally dependent on the platform and can vary
+       significantly, so should be measured on the shipping platform
+       with a power meter. -->
+
+  <!-- Display related values. -->
+  <!-- Average battery current draw of display0 while on without backlight.
+       There must be one of these for each display, labeled:
+       screen.on.display0, screen.on.display1, etc...
+
+       Each display suffix number should match it's ordinal in its display device config.
+  -->
+  <item name="screen.on">98.64</item>
+  <!-- Average battery current draw of the backlight at full brightness.
+       The full current draw of display N at full brightness should be the sum of screen.on.displayN
+       and screen.full.displayN
+
+       There must be one of these for each display, labeled:
+       screen.full.display0, screen.full.display1, etc...
+
+       Each display suffix number should match it's ordinal in its display device config.
+  -->
+  <item name="screen.full">312.36</item>
+  <item name="wifi.on">0.21</item>
+  <item name="wifi.active">87.51</item>
+  <item name="wifi.scan">174.47</item>
+  <item name="camera.avg">696.55</item>
+  <item name="camera.flashlight">126.08</item>
+  <item name="gps.on">8.65</item>
+
+  <!-- Radio related values. For modems without energy reporting support in firmware, use
+       radio.active, radio.scanning, and radio.on. -->
+  <item name="radio.active">131</item>
+  <item name="radio.scanning">71</item>
+  <!-- Current consumed by the radio at different signal strengths, when paging -->
+  <array name="radio.on">    <!-- Strength 0 to BINS-1 -->
+    <value>33.079</value>
+    <value>30</value>
+    <value>25</value>
+    <value>20</value>
+    <value>15</value>
+    <value>10</value>
+    <value>5</value>
+    <value>4.3</value>
+  </array>
+
+  <!-- A list of heterogeneous CPU clusters, where the value for each cluster represents the
+       number of CPU cores for that cluster.
+
+       Ex:
+       <array name="cpu.clusters.cores">
+         <value>4</value> // cluster 0 has cpu0, cpu1, cpu2, cpu3
+         <value>2</value> // cluster 1 has cpu4, cpu5
+       </array> -->
+  <array name="cpu.clusters.cores">
+    <value>4</value>
+    <value>3</value>
+    <value>1</value>
+  </array>
+
+  <!-- Different CPU speeds for cluster 0 as reported in
+       /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state.
+
+       There must be one of these for each cluster, labeled:
+       cpu.speeds.cluster0, cpu.speeds.cluster1, etc... -->
+  <array name="cpu.core_speeds.cluster0">
+    <value>307200</value>
+    <value>441600</value>
+    <value>614400</value>
+    <value>806400</value>
+    <value>902400</value>
+    <value>1075200</value>
+    <value>1228800</value>
+    <value>1363200</value>
+    <value>1555200</value>
+    <value>1689600</value>
+    <value>1804800</value>
+  </array>
+
+  <array name="cpu.core_speeds.cluster1">
+    <value>499200</value>
+    <value>652800</value>
+    <value>940800</value>
+    <value>1113600</value>
+    <value>1267200</value>
+    <value>1401600</value>
+    <value>1516800</value>
+    <value>1651200</value>
+    <value>1804800</value>
+    <value>2054400</value>
+    <value>2208000</value>
+    <value>2400000</value>
+  </array>
+
+  <array name="cpu.core_speeds.cluster2">
+    <value>499200</value>
+    <value>652800</value>
+    <value>940800</value>
+    <value>1171200</value>
+    <value>1267200</value>
+    <value>1401600</value>
+    <value>1516800</value>
+    <value>1651200</value>
+    <value>1804800</value>
+    <value>2054400</value>
+    <value>2112000</value>
+    <value>2284800</value>
+    <value>2457600</value>
+    <value>2592000</value>
+    <value>2630400</value>
+  </array>
+
+  <!-- Current at each CPU speed for cluster 0, as per 'cpu.speeds.cluster0'.
+       Like cpu.speeds.cluster0, there must be one of these present for
+       each heterogeneous CPU cluster. -->
+  <array name="cpu.core_power.cluster0">
+    <value>28</value>
+    <value>31</value>
+    <value>35</value>
+    <value>40</value>
+    <value>42</value>
+    <value>47</value>
+    <value>53</value>
+    <value>58</value>
+    <value>66</value>
+    <value>87</value>
+    <value>90</value>
+  </array>
+
+  <!-- Current at each CPU speed for cluster 1, as per 'cpu.speeds.cluster1'.
+       Like cpu.speeds.cluster1, there must be one of these present for
+       each heterogeneous CPU cluster. -->
+  <array name="cpu.core_power.cluster1">
+    <value>44</value>
+    <value>51</value>
+    <value>67</value>
+    <value>81</value>
+    <value>96</value>
+    <value>103</value>
+    <value>116</value>
+    <value>126</value>
+    <value>196</value>
+    <value>197</value>
+    <value>254</value>
+    <value>256</value>
+  </array>
+
+  <!-- Current at each CPU speed for cluster 2, as per 'cpu.speeds.cluster2'.
+       Like cpu.speeds.cluster2, there must be one of these present for
+       each heterogeneous CPU cluster. -->
+  <array name="cpu.core_power.cluster2">
+    <value>46</value>
+    <value>52</value>
+    <value>69</value>
+    <value>89</value>
+    <value>95</value>
+    <value>104</value>
+    <value>117</value>
+    <value>134</value>
+    <value>212</value>
+    <value>213</value>
+    <value>215</value>
+    <value>277</value>
+    <value>292</value>
+    <value>294</value>
+    <value>296</value>
+  </array>
+  <item name="cpu.cluster_power.cluster0">1.2</item>
+  <item name="cpu.cluster_power.cluster1">1.2</item>
+  <item name="cpu.cluster_power.cluster2">1.2</item>
+  <!-- Current when CPU is suspended -->
+  <item name="cpu.suspend">7.5</item>
+  <!-- Current when CPU is idle -->
+  <item name="cpu.idle">10.32</item>
+  <item name="cpu.active">12.9</item>
+  <!-- This is the battery capacity in mAh (measured at nominal voltage) -->
+  <item name="battery.capacity">4500</item>
+</device>

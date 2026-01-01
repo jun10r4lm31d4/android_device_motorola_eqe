@@ -5,6 +5,9 @@
 #
 
 DEVICE_PATH := device/motorola/eqe
+KERNEL_PATH := $(DEVICE_PATH)-kernel
+
+BUILD_BROKEN_DUP_RULES := true
 
 # A/B
 AB_OTA_UPDATER := true
@@ -71,14 +74,10 @@ BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
 TARGET_NEEDS_DTBOIMAGE := true
 
 # Properties
-TARGET_ODM_PROP += $(DEVICE_PATH)/configs/prop/odm.prop
-TARGET_ODM_DLKM_PROP += $(DEVICE_PATH)/configs/prop/odm_dlkm.prop
-TARGET_PRODUCT_PROP += $(DEVICE_PATH)/configs/prop/product.prop
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/prop/system.prop
-TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/configs/prop/system_ext.prop
-TARGET_SYSTEM_DLKM_PROP += $(DEVICE_PATH)/configs/prop/system_dlkm.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/configs/prop/vendor.prop
-TARGET_VENDOR_DLKM_PROP += $(DEVICE_PATH)/configs/prop/vendor_dlkm.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/configs/props/odm.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/configs/props/product.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/props/system.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/configs/props/vendor.prop
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
@@ -91,95 +90,43 @@ BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
     androidboot.memcg=1 \
-    androidboot.usbcontroller=a600000.dwc3 \
-    androidboot.selinux=permissive
+    androidboot.usbcontroller=a600000.dwc3
 
 BOARD_KERNEL_CMDLINE := \
     video=vfb:640x400,bpp=32,memsize=3072000 \
     nosoftlockup \
     pstore.compress=none \
-    page_pinner=on printk.devkmsg=on mem.enable_mglru=1 \
-    bootconfig
+    page_pinner=on \
+    printk.devkmsg=on \
+    mem.enable_mglru=1
 
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_IMAGE_NAME := Image
-
-TARGET_KERNEL_SOURCE := kernel/motorola/sm7550
-
-TARGET_KERNEL_CONFIG := \
-    gki_defconfig \
-    vendor/kalama_GKI.config \
-    vendor/ext_config/moto-kalama.config \
-    vendor/ext_config/moto-kalama-gki.config \
-    vendor/ext_config/moto-kalama-eqe.config
+TARGET_KERNEL_VERSION := 5.15
+BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtbs
+BOARD_PREBUILT_DTBOIMAGE := $(BOARD_PREBUILT_DTBIMAGE_DIR)/dtbo.img
+TARGET_PREBUILT_DTB := $(BOARD_PREBUILT_DTBIMAGE_DIR)/dtb.img
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/$(BOARD_KERNEL_IMAGE_NAME)
+TARGET_PREBUILT_KERNEL_HEADERS := $(KERNEL_PATH)/kernel-uapi-headers.tar.gz
 
 # Kernel modules
-BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.systemdlkm_blocklist.msm.kalama
-BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.system_dlkm))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.vendor_blocklist.msm.kalama
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load))
+BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(KERNEL_PATH)/vendor_dlkm/system_dlkm.modules.blocklist
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(KERNEL_PATH)/vendor_dlkm/modules.blocklist
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.vendor_boot))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.recovery))
-BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.recovery $(DEVICE_PATH)/configs/modules/modules.load.vendor_ramdisk))
-SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/modules.load.system_dlkm))
 
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/motorola/sm7550-modules
-TARGET_KERNEL_EXT_MODULES := \
-    qcom/opensource/mmrm-driver \
-    qcom/opensource/mm-drivers/hw_fence \
-    qcom/opensource/mm-drivers/msm_ext_display \
-    qcom/opensource/mm-drivers/sync_fence \
-    qcom/opensource/audio-kernel \
-    qcom/opensource/camera-kernel \
-    qcom/opensource/dataipa/drivers/platform/msm \
-    qcom/opensource/datarmnet/core \
-    qcom/opensource/datarmnet-ext/aps \
-    qcom/opensource/datarmnet-ext/offload \
-    qcom/opensource/datarmnet-ext/shs \
-    qcom/opensource/datarmnet-ext/perf \
-    qcom/opensource/datarmnet-ext/perf_tether \
-    qcom/opensource/datarmnet-ext/sch \
-    qcom/opensource/datarmnet-ext/wlan \
-    qcom/opensource/securemsm-kernel \
-    qcom/opensource/display-drivers/msm \
-    qcom/opensource/eva-kernel \
-    qcom/opensource/video-driver \
-    qcom/opensource/graphics-kernel \
-    qcom/opensource/wlan/platform \
-    qcom/opensource/wlan/qcacld-3.0/.qca6750 \
-    qcom/opensource/bt-kernel \
-    motorola/drivers/mmi_annotate \
-    motorola/drivers/mmi_info \
-    motorola/drivers/power/bm_adsp_ulog \
-    motorola/drivers/power/mmi_charger \
-    motorola/drivers/power/qti_glink_charger \
-    motorola/drivers/power/qpnp_adaptive_charge \
-    motorola/drivers/misc/utag \
-    motorola/drivers/mmi_relay \
-    motorola/drivers/power/mmi_lpd_mitigate \
-    motorola/drivers/moto_f_usbnet \
-    motorola/drivers/misc/mmi_sys_temp \
-    motorola/drivers/power/wakeup_sources \
-    motorola/drivers/watchdogtest \
-    motorola/drivers/regulator/wl2868c \
-    motorola/drivers/regulator/wl2864c \
-    motorola/drivers/sensors \
-    motorola/drivers/misc/sx937x \
-    motorola/drivers/misc/awinic/sarsensor \
-    motorola/drivers/misc/awinic/aw862x_haptic_nv_v1 \
-    motorola/drivers/misc/suspend_marker \
-    motorola/drivers/input/touchscreen/touchscreen_mmi \
-    motorola/drivers/input/touchscreen/goodix_berlin_mmi \
-    motorola/drivers/input/misc/goodix_fod_mmi \
-    motorola/drivers/input/misc/vl53L1_14_1_2 \
-    motorola/drivers/moto_mm \
-    motorola/drivers/moto_mmap_fault \
-    motorola/drivers/moto_swap \
-    motorola/drivers/nfc/st21nfc \
-    motorola/drivers/ese/st54spi_gpio
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/system_dlkm.modules.load))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/vendor_dlkm.modules.load))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/vendor_ramdisk.modules.load))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/configs/modules/vendor_ramdisk.modules.load.recovery))
+
+BOARD_KERNEL_MODULE_DIR := $(KERNEL_PATH)/modules
+BOARD_SYSTEM_KERNEL_MODULES := $(addprefix $(BOARD_KERNEL_MODULE_DIR)/,$(BOARD_SYSTEM_KERNEL_MODULES_LOAD))
+BOARD_VENDOR_KERNEL_MODULES := $(addprefix $(BOARD_KERNEL_MODULE_DIR)/,$(BOARD_VENDOR_KERNEL_MODULES_LOAD))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(addprefix $(BOARD_KERNEL_MODULE_DIR)/,$(sort $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD) $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES := $(addprefix $(BOARD_KERNEL_MODULE_DIR)/,$(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD))
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
@@ -189,7 +136,13 @@ TARGET_BOARD_PLATFORM := crow
 BOARD_USES_METADATA_PARTITION := true
 
 # Partitions
+BOARD_PRODUCTIMAGE_MINIMAL_PARTITION_RESERVED_SIZE := false
+ifneq ($(TARGET_RO_FILE_SYSTEM_TYPE),erofs)
 -include vendor/lineage/config/BoardConfigReservedSize.mk
+else
+BOARD_EROFS_COMPRESSOR := lz4
+BOARD_EROFS_PCLUSTER_SIZE := 262144
+endif
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 12582912
 BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
@@ -216,11 +169,11 @@ BOARD_ROOT_EXTRA_SYMLINKS := /vendor/fsg:/fsg
 
 # Recovery
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/init/fstab.qcom
+TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/recovery.wipe
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/init/fstab.qcom
-TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/recovery.wipe
 
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
@@ -230,8 +183,9 @@ BOOT_SECURITY_PATCH := 2025-05-01
 VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # SEPolicy
-include hardware/motorola/sepolicy/qti/SEPolicy.mk
 include device/qcom/sepolicy_vndr/SEPolicy.mk
+include hardware/motorola/sepolicy/qti/SEPolicy.mk
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
@@ -263,4 +217,7 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 # Include the proprietary files BoardConfig.
 include vendor/motorola/eqe/BoardConfigVendor.mk
 
-BUILD_BROKEN_DUP_RULES := true
+# Include for debug in user build
+ifeq ($(ADBD_USER),1)
+include $(DEVICE_PATH)/adbd/BoardConfig.mk
+endif

@@ -1,0 +1,105 @@
+#============= artd ==============
+allow artd app_data_file:lnk_file read;
+
+#============= hal_audio_default ==============
+allow hal_audio_default sysfs:dir read;
+
+#============= hal_camera_default ==============
+#allow hal_camera_default default_android_service:service_manager add;
+
+#============= hal_lineage_touch_default ==============
+allow hal_lineage_touch_default sysfs:file write;
+
+#============= hal_secure_element_default ==============
+#allow hal_secure_element_default init_service_status_private_prop:file read;
+allow hal_secure_element_default mnt_vendor_file:dir search;
+
+#============= hal_sensors_default ==============
+allow hal_sensors_default sysfs:dir read;
+
+#============= hal_wifi_default ==============
+allow hal_wifi_default persist_vendor_debug_wifi_prop:file read;
+
+#============= init ==============
+allow init debugfs_tracing_debug:dir mounton;
+#allow init qti-testscripts:process transition;
+allow init sysfs:file setattr;
+allow init vendor_sysfs_scsi_host:file write;
+
+#============= isolated_app ==============
+#allow isolated_app content_capture_service:service_manager find;
+
+#============= mediacodec ==============
+#allow mediacodec custom_version_prop:file read;
+
+#============= nfc ==============
+allow nfc vendor_nfc_vendor_data_file:dir search;
+
+#============= platform_app ==============
+#allow platform_app bluetooth_lea_prop:file read;
+
+#============= qti_display_boot ==============
+#allow qti_display_boot debug_prop:property_service set;
+
+#============= rild ==============
+allow rild vendor_pd_locater_dbg_prop:file read;
+
+#============= system_server ==============
+allow system_server app_zygote_tmpfs:file write;
+#allow system_server sysfs:file read;
+#allow system_server vendor_default_prop:file read;
+allow system_server vendor_proc_hw:dir search;
+#allow system_server vndbinder_device:chr_file write;
+
+#============= system_suspend ==============
+#allow system_suspend sysfs:file read;
+
+#============= tee ==============
+allow tee boot_block_device:blk_file read;
+#allow tee device:chr_file { read write };
+allow tee vendor_gpt_block_device:blk_file read;
+allow tee vendor_xbl_block_device:blk_file read;
+
+#============= untrusted_app ==============
+#allow untrusted_app apk_data_file:file execmod;
+#allow untrusted_app app_data_file:file execmod;
+allow untrusted_app build_attestation_prop:file read;
+allow untrusted_app build_bootimage_prop:file read;
+allow untrusted_app cache_file:lnk_file read;
+allow untrusted_app input_device:dir search;
+#allow untrusted_app mnt_sdcard_file:lnk_file read;
+#allow untrusted_app proc_version:file read;
+#allow untrusted_app serialno_prop:file read;
+#allow untrusted_app system_file:file execmod;
+#allow untrusted_app userdebug_or_eng_prop:file read;
+
+#============= untrusted_app_27 ==============
+#allow untrusted_app_27 proc_version:file read;
+
+#============= vendor_hal_capabilityconfigstore_qti_default ==============
+allow vendor_hal_capabilityconfigstore_qti_default vendor_cap_configstore_dbg_prop:file read;
+
+#============= vendor_hal_gnss_qti ==============
+allow vendor_hal_gnss_qti fwk_sensor_service:service_manager find;
+allow vendor_hal_gnss_qti vendor_pd_locater_dbg_prop:file read;
+
+#============= vendor_hal_perf_default ==============
+allow vendor_hal_perf_default hal_camera_default:dir search;
+
+#============= vendor_init ==============
+allow vendor_init block_device:lnk_file setattr;
+#allow vendor_init build_prop:property_service set;
+#allow vendor_init default_prop:file read;
+
+#============= vendor_init_touch ==============
+allow vendor_init_touch sysfs:file { getattr read };
+
+#============= vendor_mmi_boot ==============
+allow vendor_mmi_boot kmsg_device:chr_file write;
+#allow vendor_mmi_boot vendor_default_prop:property_service set;
+
+#============= vendor_qti_init_shell ==============
+allow vendor_qti_init_shell kmsg_device:chr_file write;
+
+#============= vendor_sensors ==============
+allow vendor_sensors vendor_sysfs_devicetree_mmi:file read;

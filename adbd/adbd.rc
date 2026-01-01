@@ -1,0 +1,5 @@
+on boot
+    setprop persist.sys.usb.config adb
+    setprop sys.usb.config adb
+    setprop sys.usb.configfs 1
+    start adbd
