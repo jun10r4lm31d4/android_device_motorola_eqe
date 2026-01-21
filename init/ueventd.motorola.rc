@@ -1,2 +1,14 @@
 # Motorola: Add for HIDRAW to access the glass usb device
 /dev/hidraw*             0660    uhid       uhid
+
+#Virtualization Attributes
+/dev/gunyah                 0666   root     root
+
+# Q2SPI UWB device
+/dev/q2spiuwb    0660    uwb    uwb
+
+# SPI UWB device
+/dev/spiuwb    0660    uwb    uwb
+
+#power_state device node
+/dev/power_state           0660   system      system

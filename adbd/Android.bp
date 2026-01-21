@@ -4,3 +4,10 @@ prebuilt_etc {
     sub_dir: "init",
     vendor: true,
 }
+
+sh_binary {
+    name: "logcat_boot.sh",
+    src: "logcat_boot.sh",
+    filename: "logcat_boot.sh",
+    vendor: true,
+}

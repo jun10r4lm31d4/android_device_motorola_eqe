@@ -9,4 +9,5 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/adbkey.pub:$(TARGET_COPY_OUT_PRODUCT)/etc/security/adb_keys
 
 PRODUCT_PACKAGES += \
-    adbd.rc
+    adbd.rc \
+    logcat_boot.sh

@@ -36,6 +36,7 @@ on early-boot
     mkdir /mnt/vendor/persist/camera/gyro_compat 0770 vendor_tcmd camera
 # Create directory for wireless charge test in factory
     mkdir /data/vendor/wlc 0775 vendor_tcmd system
+    chmod 0775  /mnt/vendor/persist/sensors
     chown system system /mnt/vendor/persist/sensors/als_comp_multi_cal_raw
     chmod 0664 /mnt/vendor/persist/sensors/als_comp_multi_cal_raw
 # for ufs HID
@@ -250,6 +251,12 @@ on property:vendor.usb.headset_reset=2
 on property:vendor.usb.headset_reset=0
     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/headset_reset_delay 2
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode host
+
+on property:sys.usb.current_limit=1
+    write /sys/class/power_supply/battery/device/force_charger_suspend 1
+
+on property:sys.usb.current_limit=0
+   write /sys/class/power_supply/battery/device/force_charger_suspend 0
 
 # Bind SB felica configs if SB SKU
 on property:sys.boot_completed=1 && property:ro.boot.hardware.sku=XT2403-5

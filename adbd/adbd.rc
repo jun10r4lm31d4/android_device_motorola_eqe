@@ -3,3 +3,14 @@ on boot
     setprop sys.usb.config adb
     setprop sys.usb.configfs 1
     start adbd
+
+service logcat_boot /system/bin/sh /vendor/bin/logcat_boot.sh
+    class main
+    user root
+    group root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start logcat_boot
