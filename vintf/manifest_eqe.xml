@@ -1,0 +1,23 @@
+<manifest version="5.0" type="device" target-level="7">
+    <hal format="hidl" override="true">
+        <name>android.hardware.media.c2</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IComponentStore/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>com.motorola.hardware.biometric.fingerprint</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IMotoFingerPrint/default</fqname>
+        <fqname>@1.0::IMotoFingerPrintSensorTest/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>motorola.hardware.camera.desktop</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::ICameraDesktop/default</fqname>
+        <fqname>@2.0::ICameraDesktop/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>vendor.qti.memory.pasrmanager</name>
+        <transport>hwbinder</transport>
+    </hal>
+</manifest>

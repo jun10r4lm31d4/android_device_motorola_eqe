@@ -211,7 +211,9 @@ on property:sys.boot_completed=1
     chmod 0660 /sys/class/power_supply/wireless/device/wlc_fan_speed
 
     # Change force_charging_enable access mode and permission for tcmd
+    chmod 0664 /sys/class/power_supply/battery/device/force_charging_disable
     chmod 0664 /sys/class/power_supply/battery/device/force_charging_enable
+    chown vendor_tcmd system /sys/class/power_supply/battery/device/force_charging_disable
     chown vendor_tcmd system /sys/class/power_supply/battery/device/force_charging_enable
 
     # Set adaptive charging perms for HAL

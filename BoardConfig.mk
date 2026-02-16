@@ -190,7 +190,7 @@ BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 # Verified Boot
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_ROLLBACK_INDEX := 15
+BOARD_AVB_ROLLBACK_INDEX := 17
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 BOARD_AVB_VBMETA_SYSTEM := system system_ext product
 BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
@@ -218,6 +218,6 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 include vendor/motorola/eqe/BoardConfigVendor.mk
 
 # Include for debug in user build
-ifeq ($(ADBD_USER),1)
-include $(DEVICE_PATH)/adbd/BoardConfig.mk
+ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+    include $(DEVICE_PATH)/adbd/BoardConfig.mk
 endif

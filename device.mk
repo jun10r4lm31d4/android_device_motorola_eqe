@@ -11,6 +11,9 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # Add common definitions for Qualcomm
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
+# Setup dalvik vm configs
+$(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
+
 # A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
@@ -60,15 +63,15 @@ CONFIG_PAL_SRC_DIR := $(AUDIO_HAL_DIR)/../pal/configs/crow
 PRODUCT_COPY_FILES += \
     $(AUDIO_HAL_DIR)/configs/common/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(CONFIG_HAL_SRC_DIR)/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/audio_effects.conf \
+    $(CONFIG_HAL_SRC_DIR)/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/audio_effects.xml \
     $(CONFIG_PAL_SRC_DIR)/card-defs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/card-defs.xml \
     $(CONFIG_HAL_SRC_DIR)/microphone_characteristics.xml:$(TARGET_COPY_OUT_VENDOR)/etc/microphone_characteristics.xml \
     $(CONFIG_PAL_SRC_DIR)/usecaseKvManager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usecaseKvManager.xml
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow/audio_effects.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     $(LOCAL_PATH)/configs/audio/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_crow_qssi/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/usbv2_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usbv2_audio_policy_configuration.xml
 
 $(call soong_config_set_bool,android_hardware_audio,skip_speaker_layout_channel_mask_field,true)
@@ -182,11 +185,21 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    fstab.qcom.zram \
     fstab.qcom.vendor_ramdisk \
+    fstab.qcom.zram \
+    init.mmi.charge_only.rc \
+    init.mmi.chipset.rc \
+    init.mmi.overlay.rc \
+    init.mmi.rc \
+    init.qcom.rc \
+    init.qcom.recovery.rc \
+    init.qti.qcv.rc \
+    init.target.rc \
     ueventd.motorola.rc \
     ueventd.qcom.rc \
-    init.mmi.overlay.rc
+
+PRODUCT_PACKAGES += \
+    init.mmi.touch.sh \
 
 # Keymint
 PRODUCT_PACKAGES += \
@@ -214,9 +227,29 @@ $(call soong_config_set_bool,livedisplay_sdm,enable_dm,false)
 $(call soong_config_set_bool,livedisplay_sysfs,enable_af,true)
 $(call soong_config_set_bool,livedisplay_sysfs,enable_se,true)
 
+# Logging
+SPAMMY_LOG_TAGS := \
+    MiStcImpl \
+    SDM \
+    SDM-histogram \
+    SRE \
+    WifiHAL \
+    cnss-daemon \
+    libcitsensorservice@2.0-impl \
+    libsensor-displayalgo \
+    libsensor-parseRGB \
+    libsensor-ssccalapi \
+    sensors \
+    vendor.qti.hardware.display.composer-service \
+    vendor.xiaomi.sensor.citsensorservice@2.0-service
+
+ifneq ($(TARGET_BUILD_VARIANT),eng)
+PRODUCT_VENDOR_PROPERTIES += \
+    $(foreach tag,$(SPAMMY_LOG_TAGS),log.tag.$(tag)=E)
+endif
+
 # Media
 PRODUCT_COPY_FILES += \
-    $(AUDIO_HAL_DIR)/configs/common/codec2/media_codecs_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2_audio.xml \
     $(AUDIO_HAL_DIR)/configs/common/codec2/service/1.0/c2audio.vendor.base-arm64.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/c2audio.vendor.base-arm64.policy \
     $(AUDIO_HAL_DIR)/configs/common/codec2/service/1.0/c2audio.vendor.ext-arm64.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/c2audio.vendor.ext-arm64.policy
 
@@ -224,10 +257,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.memtrack-service
 
-# MotoActions
+# Moto
 PRODUCT_PACKAGES += \
     MotoActions \
-    MotoCommonOverlay
+    MotoCommonOverlay \
+    MotoEuicc \
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -246,24 +280,20 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.nxp.mifare.xml
 
 # Overlays
+PRODUCT_ENFORCE_RRO_TARGETS := *
+
+PRODUCT_PACKAGES += \
+    NcmTetheringOverlay \
+
 PRODUCT_PACKAGES += \
     ApertureOverlayDevice \
-    DeviceAsWebcamOverlayDevice \
     FrameworkResOverlayDevice \
+    LineageSDKOverlayDevice \
     SecureElementOverlayDevice \
     SettingsOverlayDevice \
     SystemUIOverlayDevice \
     TelephonyOverlayDevice \
     WifiResourcesOverlayDevice \
-    FrameworksResMotoCommon \
-    NcmTetheringOverlay \
-    LineageDialerOverlayDevice \
-    LineageSDKOverlayDevice
-
-#    LineageFrameworkResOverlayDevice \
-#    LineageSecureElementOverlayDevice \
-#    LineageSettingsOverlayDevice \
-#    LineageSystemUIOverlayDevice \
  
 # Partitions
 PRODUCT_PACKAGES += \
@@ -429,7 +459,8 @@ DEVICE_MANIFEST_SKUS := crow
 DEVICE_MANIFEST_CROW_FILES := \
     $(AUDIO_HAL_DIR)/configs/common/manifest_non_qmaa.xml \
     $(AUDIO_HAL_DIR)/configs/common/manifest_non_qmaa_extn.xml \
-    $(LOCAL_PATH)/vintf/manifest_crow.xml
+    $(LOCAL_PATH)/vintf/manifest_crow.xml \
+    $(LOCAL_PATH)/vintf/manifest_eqe.xml
 
 ODM_MANIFEST_SKUS += dn dne
 ODM_MANIFEST_DN_FILES := $(LOCAL_PATH)/vintf/manifest_eqe_dn.xml
@@ -464,6 +495,6 @@ PRODUCT_PACKAGES += \
 # Inherit from the proprietary files makefile.
 $(call inherit-product, vendor/motorola/eqe/eqe-vendor.mk)
 
-ifeq ($(ADBD_USER),1)
+ifeq ($(TARGET_BUILD_VARIANT),userdebug)
     $(call inherit-product, $(LOCAL_PATH)/adbd/device.mk)
 endif

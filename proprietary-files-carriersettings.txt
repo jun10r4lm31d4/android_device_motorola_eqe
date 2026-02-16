@@ -2135,6 +2135,7 @@ product/etc/CarrierSettings/s34001.pb
 product/etc/CarrierSettings/s34004gid1_3d_f008.pb
 product/etc/CarrierSettings/s34009gid1_3d_f007.pb
 product/etc/CarrierSettings/s34020.pb
+product/etc/CarrierSettings/s34020imsi_3d_3402002.pb
 product/etc/CarrierSettings/s34260.pb
 product/etc/CarrierSettings/s342600.pb
 product/etc/CarrierSettings/s34492.pb
@@ -3110,6 +3111,7 @@ product/etc/CarrierSettings/s72438.pb
 product/etc/CarrierSettings/s72439.pb
 product/etc/CarrierSettings/s72454.pb
 product/etc/CarrierSettings/s72477.pb
+product/etc/CarrierSettings/s72489.pb
 product/etc/CarrierSettings/s73001.pb
 product/etc/CarrierSettings/s73002.pb
 product/etc/CarrierSettings/s73003.pb
