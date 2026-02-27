@@ -625,17 +625,13 @@ vendor/lib64/vendor.qti.hardware.embmssl@1.0.so
 vendor/lib64/vendor.qti.hardware.embmssl@1.1.so
 
 # Diag
+system/lib64/vendor.qti.diaghal-V1-ndk.so
 system_ext/lib64/vendor.qti.diaghal@1.0.so
 vendor/bin/diag-router
 vendor/etc/init/vendor.qti.diag_userdebug.rc
 vendor/etc/vintf/manifest/vendor.qti.diag.hal.service.xml
 vendor/lib64/libdiag.so
 vendor/lib64/vendor.qti.diaghal@1.0.so;MODULE_SUFFIX=_vendor
-
-# Display calibration data
-vendor/etc/display/qdcm_calib_data_mipi_mot_vid_csot_1220p_dsc_667.json
-vendor/etc/display/qdcm_calib_data_mipi_mot_vid_tm_1220p_dsc_667.json
-vendor/etc/display/qdcm_calib_data_mipi_mot_video_dummy_qhd.json
 
 # Display - HDR
 vendor/etc/hdr_tm_config.xml
@@ -700,6 +696,11 @@ vendor/lib64/libsdmextension.so
 vendor/lib64/libtestutils.so
 vendor/lib64/libtinyxml2_1.so
 vendor/lib64/libvmfilexfer.so
+
+# Display calibration data
+vendor/etc/display/qdcm_calib_data_mipi_mot_vid_csot_1220p_dsc_667.json
+vendor/etc/display/qdcm_calib_data_mipi_mot_vid_tm_1220p_dsc_667.json
+vendor/etc/display/qdcm_calib_data_mipi_mot_video_dummy_qhd.json
 
 # Display postprocessing
 vendor/bin/hw/vendor.display.color@1.0-service
@@ -947,7 +948,6 @@ vendor/lib64/libqtiidentitycredential.so
 # IMS
 system/etc/permissions/moto-telephony.xml:system_ext/etc/permissions/moto-telephony.xml
 system/framework/moto-telephony.jar:system_ext/framework/moto-telephony.jar
-system/lib64/vendor.qti.diaghal-V1-ndk.so
 system_ext/app/ImsRcsService/ImsRcsService.apk
 system_ext/etc/permissions/telephony_system-ext_privapp-permissions-qti.xml
 system_ext/etc/permissions/vendor.qti.ims.rcsservice.xml
@@ -1198,10 +1198,6 @@ product/etc/permissions/com.motorola.moto-uirefresh.xml
 system_ext/etc/permissions/com.motorola.camera.desktop.xml
 vendor/etc/permissions/com.motorola.camera.extensions.xml
 
-# Native public libraries
-system_ext/etc/public.libraries-qti.txt
-vendor/etc/public.libraries.txt
-
 # Neural networks
 vendor/lib64/libQnnHtp.so
 vendor/lib64/libQnnHtpPrepare.so
@@ -1322,6 +1318,10 @@ vendor/bin/power_off_alarm
 vendor/etc/init/vendor.qti.hardware.alarm@1.0-service.rc
 vendor/lib64/hw/vendor.qti.hardware.alarm@1.0-impl.so
 vendor/lib64/vendor.qti.hardware.alarm@1.0.so
+
+# Public libraries
+system_ext/etc/public.libraries-qti.txt
+vendor/etc/public.libraries.txt
 
 # QCC - System
 system_ext/app/QCC/QCC.apk
